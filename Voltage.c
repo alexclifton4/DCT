@@ -30,24 +30,25 @@ void updateVoltage(struct State* state) {
 	float voltage;
 	if (state->showLive) {
 		// Get the averaged value and scale it to the range
-		voltage = scale(averageReading(state), 0, ADC_MAX, VOLTAGE_MIN, VOLTAGE_MAX);
+		voltage = scale(averageReading(state), ADC_MIN, ADC_MAX, VOLTAGE_MIN, VOLTAGE_MAX);
+		// Increment the readings index so that the next value goes to the next position in the array
 		state->readingsIndex = (state->readingsIndex + 1) % AVERAGE_READINGS;
 		
 	} else {
-		// Update display after a while
+		// Not in live mode so update display after a while
 		if (state->readingsIndex > AVERAGE_READINGS) {
 			state->mostRecentAverage = averageReading(state);
 			state->readingsIndex = 0;
 		}
-		// Display the most recent value
-		voltage = scale(state->mostRecentAverage, 0, ADC_MAX, VOLTAGE_MIN, VOLTAGE_MAX);
+		// Get the most recent value and scale to range
+		voltage = scale(state->mostRecentAverage, ADC_MIN, ADC_MAX, VOLTAGE_MIN, VOLTAGE_MAX);
 		state->readingsIndex++;
 	}
 	
 	// Display the voltage
 	PB_LCD_GoToXY(0, 0);
 	char text [16];
-	snprintf(text, 16, "Voltage: %.3fV", voltage + state->offset); // The offset is subtracted from the value
+	snprintf(text, 16, "Voltage: %.3fV", voltage - state->offset); // The offset is subtracted from the value
 	PB_LCD_WriteString(text, 16);
 	
 	// Display a graphic

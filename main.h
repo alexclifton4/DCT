@@ -2,6 +2,7 @@
 #define __MAIN_H
 
 // Constants for scaling
+#define ADC_MIN 0
 #define ADC_MAX 4095
 #define VOLTAGE_MIN 10
 #define VOLTAGE_MAX -10
