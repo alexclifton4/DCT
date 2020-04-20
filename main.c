@@ -1,33 +1,83 @@
-#include "STM32F407xx.h"
-#include "Board_LED.h"
-#include "PB_LCD_Drivers.h"
-#include "MB_Button_Driver.h"
 #include <stdio.h>
+#include "STM32F407xx.h"
+#include "main.h"
+#include "util.h"
 
-uint32_t LEDState = 0;
+#include "PB_LCD_Drivers.h"
+#include "Button_Driver.h"
+#include "LED_Driver.h"
+#include "ADC_Driver.h"
+
+#include "Modes.h"
+
+struct State state;
 
 void SysTick_Handler (void) {
-	LEDState = 1 - LEDState;
 }
 
+///////////////////
+// Main Function //
+///////////////////
 int main(void){
+	// Initialise the board
 	SystemCoreClockUpdate();
 	SysTick_Config(SystemCoreClock/2);
-	LED_Initialize();
-	MB_Button_Init();
 	
+	// Initialise buttons, LEDs and ADC
+	Button_Init();
+	LED_Init();
+	ADC_Init();
+	
+	// Initialise the LCD display
 	PB_LCD_Init();
 	PB_LCD_Clear();
-	PB_LCD_WriteString("Hello, World!", 16);
 	
+	// Start in Voltage mode
+	state.offset = 0;
+	state.showLive = 1;
+	switchToVoltage(&state);
+	
+	///////////////////////
+	// Main program loop //
+	///////////////////////
 	while(1) {
-		if (LEDState) LED_On(0);
-		else LED_Off(0);
+		// Do something depending on the current mode
+		switch (state.currentMode) {
+			case Voltage:
+				updateVoltage(&state);
+				break;
+			case Current:
+				updateCurrent(&state);
+				break;
+			case Resistance:
+				updateResistance(&state);
+				break;
+		}
 		
-		PB_LCD_GoToXY(0,1);
-		
-		char text [16];
-		snprintf(text, 16, "Press: %d", MB_Button_Press());
-		PB_LCD_WriteString(text, 16);
+		// Check if show live button is pressed
+		if (Button_Press_Debounced(8)) {
+			state.showLive = 1 - state.showLive;
+			// Clear averaging
+			for (int i = 0; i < AVERAGE_READINGS; i++) {
+				state.readings[i] = 0;
+			}
+			state.readingsIndex = 0;
+			
+			// If not show live, put on the LED
+			if (state.showLive == 0) {
+				LED_Turn_On(8);
+			} else {
+				LED_Turn_Off(8);
+			}
+		}
+			
+		// Check if we should switch modes
+		if (Button_Press_Debounced(2)) {
+			switchToVoltage(&state);
+		} else if (Button_Press_Debounced(3)) {
+			switchToCurrent(&state);
+		} else if (Button_Press_Debounced(4)) {
+			switchToResistance(&state);
+		}
 	}
 }
