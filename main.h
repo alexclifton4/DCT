@@ -10,10 +10,12 @@
 #define CURRENT_MAX 100
 #define RESISTANCE_MIN 0
 #define RESISTANCE_MAX 50
+#define CAPACITANCE_MIN 0.1
+#define CAPACITANCE_MAX 100
 #define AVERAGE_READINGS 100
 
 // Stores which mode the system is in
-enum Mode{Voltage, Current, Resistance};
+enum Mode{Voltage, Current, Resistance, Capacitance};
 
 // Struct to hold state information
 struct State {

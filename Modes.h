@@ -5,9 +5,11 @@
 void switchToVoltage(struct State* state);
 void switchToCurrent(struct State* state);
 void switchToResistance(struct State* state);
+void switchToCapacitance(struct State* state);
 
 void updateVoltage(struct State* state);
 void updateCurrent(struct State* state);
 void updateResistance(struct State* state);
+void updateCapacitance(struct State* state);
 
 #endif

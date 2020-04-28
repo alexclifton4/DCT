@@ -14,6 +14,8 @@ void switchToCurrent(struct State* state) {
 	LED_Turn_On(3);
 	LED_Turn_Off(2);
 	LED_Turn_Off(4);
+	LED_Turn_Off(5);
+	LED_Turn_Off(6);
 
 	// Reset averaging
 	for (int i = 0; i < AVERAGE_READINGS; i++) {
