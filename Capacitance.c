@@ -44,7 +44,7 @@ void updateCapacitance(struct State* state) {
 			state->readingsIndex = 0;
 		}
 		// Get the most recent value and scale to range
-		capacitance = scale(state->mostRecentAverage, ADC_MIN, ADC_MAX, CAPACITANCE_MIN, CAPACITANCE_MAXs);
+		capacitance = scale(state->mostRecentAverage, ADC_MIN, ADC_MAX, CAPACITANCE_MIN, CAPACITANCE_MAX);
 		state->readingsIndex++;
 	}
 
