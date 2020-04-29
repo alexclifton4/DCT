@@ -15,7 +15,7 @@
 #define AVERAGE_READINGS 100
 
 // Stores which mode the system is in
-enum Mode{Voltage, Current, Resistance, Capacitance};
+enum Mode{Voltage, Current, Resistance, Capacitance, Frequency};
 
 // Struct to hold state information
 struct State {
@@ -25,6 +25,9 @@ struct State {
 	int readingsIndex;
 	float offset;
 	float mostRecentAverage;
+	int lastFrequencyReading;
+	int lastFrequencyChange;
+	int frequencyCounter;
 };
 
 #endif

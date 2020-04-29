@@ -12,7 +12,13 @@
 
 struct State state;
 
+// Interrupt happens once per second
 void SysTick_Handler (void) {
+	// Do something depending on the current mode
+	switch (state.currentMode) {
+		case Frequency:
+			break;
+	}
 }
 
 ///////////////////
@@ -21,7 +27,8 @@ void SysTick_Handler (void) {
 int main(void){
 	// Initialise the board
 	SystemCoreClockUpdate();
-	SysTick_Config(SystemCoreClock/2);
+	// Setup SysTick to interrupt once per second
+	SysTick_Config(SystemCoreClock);
 	
 	// Initialise buttons, LEDs and ADC
 	Button_Init();
