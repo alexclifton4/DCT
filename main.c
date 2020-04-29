@@ -17,6 +17,10 @@ void SysTick_Handler (void) {
 	// Do something depending on the current mode
 	switch (state.currentMode) {
 		case Frequency:
+			tickFrequency();
+			break;
+		case Capacitance:
+			tickCapacitance();
 			break;
 	}
 }
@@ -59,6 +63,13 @@ int main(void){
 			case Resistance:
 				updateResistance(&state);
 				break;
+			case Capacitance:
+				// Capacitance measures the frequency and then performs a calculation
+				// Therefore, it does not need it's own update method
+				/* FALL THROUGH */
+			case Frequency:
+				updateFrequency(&state);
+				break;
 		}
 		
 		// Check if show live button is pressed
@@ -85,6 +96,10 @@ int main(void){
 			switchToCurrent(&state);
 		} else if (Button_Press_Debounced(4)) {
 			switchToResistance(&state);
+		} else if (Button_Press_Debounced(5)) {
+			switchToCapacitance(&state);
+		} else if (Button_Press_Debounced(6)) {
+			switchToFrequency(&state);
 		}
 	}
 }
