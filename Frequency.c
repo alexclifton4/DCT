@@ -55,7 +55,7 @@ void tickFrequency(struct State* state) {
 	// Display the frequency
 	PB_LCD_GoToXY(0, 0);
 	char text[16];
-	snprintf(text, 16, "Freq: %.5fHz", frequency);
+	snprintf(text, 16, "Freq: %dHz", frequency);
 	PB_LCD_WriteString(text, 16);
 
 	// Reset the counter

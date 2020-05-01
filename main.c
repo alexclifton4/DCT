@@ -17,11 +17,14 @@ void SysTick_Handler (void) {
 	// Do something depending on the current mode
 	switch (state.currentMode) {
 		case Frequency:
-			tickFrequency();
+			tickFrequency(&state);
 			break;
 		case Capacitance:
-			tickCapacitance();
+			tickCapacitance(&state);
 			break;
+        default:
+            // Don't do anything for other modes
+            break;
 	}
 }
 
