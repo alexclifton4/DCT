@@ -76,6 +76,6 @@ void updateVoltage(struct State* state) {
 	// Check if calibration button is pressed
 	if (Button_Press_Debounced(9)) {
 		// Read the current value and store as offset
-		state->offset = 5 - voltage;
+		state->offset = 5 - voltage; // Calibrate with 5V
 	}
 }

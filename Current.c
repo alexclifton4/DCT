@@ -51,7 +51,7 @@ void updateCurrent(struct State* state) {
 	// Display the current
 	PB_LCD_GoToXY(0, 0);
 	char text[16];
-	snprintf(text, 16, "Current: %.3fA", current - state->offset); // The offset is subtracted from the value
+	snprintf(text, 16, "Current: %.3fmA", current - state->offset); // The offset is subtracted from the value
 	PB_LCD_WriteString(text, 16);
 
 	// Display a graphic
@@ -78,6 +78,6 @@ void updateCurrent(struct State* state) {
 	// Check if calibration button is pressed
 	if (Button_Press_Debounced(9)) {
 		// Read the current value and store as offset
-		state->offset = 5 - current;
+		state->offset = 50 - current; // Calibrate with 50 milliamps
 	}
 }

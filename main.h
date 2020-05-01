@@ -5,13 +5,13 @@
 #define ADC_MIN 0
 #define ADC_MAX 4095
 #define VOLTAGE_MIN 10
-#define VOLTAGE_MAX -10
+#define VOLTAGE_MAX -10 // Volts - range switched as uses inverting amplifier
 #define CURRENT_MIN 0
-#define CURRENT_MAX 100
+#define CURRENT_MAX 100 // Milliamps
 #define RESISTANCE_MIN 0
-#define RESISTANCE_MAX 50
+#define RESISTANCE_MAX 100 // Kilo ohms
 #define CAPACITANCE_MIN 0.1
-#define CAPACITANCE_MAX 100
+#define CAPACITANCE_MAX 100 // Micro farads
 #define AVERAGE_READINGS 100
 
 // Stores which mode the system is in

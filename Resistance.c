@@ -78,6 +78,6 @@ void updateResistance(struct State* state) {
 	// Check if calibration button is pressed
 	if (Button_Press_Debounced(9)) {
 		// Read the current value and store as offset
-		state->offset = 5 - resistance;
+		state->offset = 33 - resistance; // Calibrate with 33 kilo ohms
 	}
 }

@@ -93,15 +93,21 @@ int main(void){
 		}
 			
 		// Check if we should switch modes
+		// Reset calibration before switching mode
 		if (Button_Press_Debounced(2)) {
+			state.offset = 0;
 			switchToVoltage(&state);
 		} else if (Button_Press_Debounced(3)) {
+			state.offset = 0;
 			switchToCurrent(&state);
 		} else if (Button_Press_Debounced(4)) {
+			state.offset = 0;
 			switchToResistance(&state);
 		} else if (Button_Press_Debounced(5)) {
+			state.offset = 0;
 			switchToCapacitance(&state);
 		} else if (Button_Press_Debounced(6)) {
+			state.offset = 0;
 			switchToFrequency(&state);
 		}
 	}
